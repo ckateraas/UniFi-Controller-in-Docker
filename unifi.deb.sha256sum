@@ -1,1 +1,13 @@
-a2c2d6ffd50be0cc7c78618ab28da7521bfa782e0212c5d3fb7b682f266f3285 unifi.deb
+8b2de1f74a05020ad7fed77cd621c504 *UniFi-installer.exe
+5d1d9fdb3faf70632252e37e1c5e3d8e *UniFi.pkg]
+576c372db44a76e69725612ed9e9bbc1 *unifi_sysvinit_all.deb
+601df32736f41e40a80a3e472450a3e1 *unifi_sh_api
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+SHA256(UniFi-installer.exe)= d2b2bb92b29ca0858cd712b8155f2998507b66d58b5e9797b5e7e584657c05e8
+SHA256(UniFi.pkg)= ec43ebcd570b6d473c1e8b93d583a508f1f9bbad97940a6da0750e6509b13ae6
+SHA256(unifi_sysvinit_all.deb)= 281e5332db66a830f06c6c52ac735c3e82ac517ed6d5fabc2cf4120bc7f93464
+SHA256(unifi_sh_api)= 1791685039ea795970bcc7a61eec854058e3e6fc13c52770e31e20f3beb622eb

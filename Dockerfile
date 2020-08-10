@@ -15,13 +15,12 @@ COPY unifi.deb.sha256sum /unifi.deb.sha256sum
 RUN curl -L -o unifi.deb "${PKGURL}"
 RUN sha256sum -c unifi.deb.sha256sum
 
-RUN curl -s https://www.mongodb.org/static/pgp/server-3.4.asc | apt-key add -
-RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" > /etc/apt/sources.list.d/mongodb-org-3.4.list
+RUN curl -s https://www.mongodb.org/static/pgp/server-3.6.asc | apt-key add -
+RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" > /etc/apt/sources.list.d/mongodb-org-3.6.list
 RUN apt-get update 
 RUN apt-get install -y mongodb-org-server jsvc openjdk-8-jre-headless binutils libcap2 
 RUN dpkg --install unifi.deb
 RUN rm unifi.deb unifi.deb.sha256sum
-
 
 COPY functions /functions
 
