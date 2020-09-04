@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG PKGURL=https://dl.ubnt.com/unifi/5.12.66/unifi_sysvinit_all.deb
+ARG PKGURL=https://dl.ui.com/unifi/5.14.23/unifi_sysvinit_all.deb
 ARG UNIFI_GID=999
 ARG UNIFI_UID=999
 
