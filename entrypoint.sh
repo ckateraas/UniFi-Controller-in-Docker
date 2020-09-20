@@ -15,7 +15,6 @@ if [[ "$EUID" -eq 0 ]]; then
 fi
 
 if [[ -z "${JAVA_HOME}" ]]; then
-  log "JAVA_HOME is not set. Fixing!"
   set_java_home
 fi
 
