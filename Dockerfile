@@ -33,9 +33,8 @@ COPY healthcheck.sh /healthcheck.sh
 RUN chmod +x /healthcheck.sh
 
 WORKDIR /unifi
-RUN chown -R unifi:unifi /unifi /usr/lib/unifi
-
-USER unifi
+RUN chown -R unifi:unifi /usr/lib/unifi
+RUN chown -R unifi:unifi /unifi
 
 EXPOSE 6789/tcp 8080/tcp 8443/tcp 8880/tcp 8843/tcp 3478/udp
 
