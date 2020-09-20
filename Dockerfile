@@ -24,7 +24,7 @@ RUN apt-get install -y mongodb-org-server jsvc \
 RUN dpkg --install unifi.deb
 RUN rm unifi.deb unifi.deb.sha256sum
 
-COPY functions /functions
+COPY functions.sh /functions.sh
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

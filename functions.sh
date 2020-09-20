@@ -12,7 +12,14 @@ log() {
     echo "$(date +"[%Y-%m-%d %T]") $*"
 }
 
+prepare_unifi_dir() {
+    log "Fixing permissions for $ROOT_DIR"
+    chown -R unifi:unifi "$ROOT_DIR"
+    chmod 700 "$ROOT_DIR"
+}
+
 set_java_home() {
+    log "JAVA_HOME is not set. Fixing!"
     JAVA_HOME=$(readlink -f "$(which java)" | sed "s|/jre/bin/java||")
     if [[ ! -d "$JAVA_HOME" ]]; then
         log "Tried to set JAVA_HOME to $JAVA_HOME, but it is not a directory!"
@@ -39,35 +46,34 @@ check_uid_and_gid() {
 }
 
 verify_directories_for_unifi_controller() {
-    if [[ ! -d "$DATA_DIR" ]]; then
+    if [[ ! -d "$UNIFI_INSTALLATION_DIR/data" ]]; then
         log "Linking $DATA_DIR to $UNIFI_INSTALLATION_DIR/data"
         mkdir -p "$DATA_DIR"
-        # mkdir -p "$UNIFI_INSTALLATION_DIR"/data
         ln -s "$DATA_DIR" "$UNIFI_INSTALLATION_DIR"
     fi
-    if [[ ! -d "$LOG_DIR" ]]; then
+    if [[ ! -d "$UNIFI_INSTALLATION_DIR/logs" ]]; then
         log "Linking $LOG_DIR to $UNIFI_INSTALLATION_DIR/logs"
         mkdir -p "$LOG_DIR"
-        # mkdir -p "$UNIFI_INSTALLATION_DIR"/logs
         ln -s "$LOG_DIR" "$UNIFI_INSTALLATION_DIR"
     fi
     if [[ ! -d "$CERT_DIR" ]]; then
         log "Creating $CERT_DIR"
         mkdir -p "$CERT_DIR"
     fi
-    if [[ ! -d "$BACKUP_DIR" ]]; then
-        log "Creating $BACKUP_DIR"
+    if [[ ! -d "$UNIFI_INSTALLATION_DIR/backup" ]]; then
+        log "Linking $BACKUP_DIR"
         mkdir -p "$BACKUP_DIR"
+        ln -s "$BACKUP_DIR" "$UNIFI_INSTALLATION_DIR"
     fi
 }
 
 move_properties_file() {
     # Work around that Docker Compose does not allow you to set owner of volumes
-    # so /unifi/system.properties is owned by 1000:1000.
+    # so /unifi/system.properties will, most likely, be owned by 1000:1000.
     # And if placed in /unifi/data/system.properties, then /unifi/data will be auto
     # created by Docker Compose and owned by root:root.
-    if [[ -f /unifi/system.properties ]]; then
-        cp /unifi/system.properties /unifi/data/system.properties
+    if [[ -f /system.properties ]]; then
+        cp /system.properties /unifi/data/system.properties
     fi
 }
 

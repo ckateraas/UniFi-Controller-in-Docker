@@ -2,7 +2,7 @@
 
 set -e
 
-source /functions
+source /functions.sh
 
 trap 'kill ${!}; exit_handler' SIGHUP SIGINT SIGQUIT SIGTERM
 
