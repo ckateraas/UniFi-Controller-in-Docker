@@ -6,12 +6,19 @@ source /functions.sh
 
 trap 'kill ${!}; exit_handler' SIGHUP SIGINT SIGQUIT SIGTERM
 
+# First startup is as root, to set correct GID and UID on the /unifi mount
+if [[ "$EUID" -eq 0 ]]; then
+  check_uid_and_gid
+  prepare_unifi_dir
+  log "Restarting as Unifi user"
+  runuser -u unifi -g unifi --preserve-environment /entrypoint.sh
+fi
+
 if [[ -z "${JAVA_HOME}" ]]; then
   log "JAVA_HOME is not set. Fixing!"
   set_java_home
 fi
 
-check_uid_and_gid
 verify_directories_for_unifi_controller
 
 run_mounted_init_scripts
