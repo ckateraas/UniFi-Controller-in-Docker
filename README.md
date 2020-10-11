@@ -1,23 +1,10 @@
 # UniFi Controller in Docker
 
-Run [Ubiqiti Network](https://www.ubnt.com/)'s Unifi Controller, with MongoDB, in Docker.
+Script to setup [Ubiqiti Network](https://www.ubnt.com/)'s Unifi Controller, with MongoDB, on Ubuntu 20.10.
 
 ## Description
 
-This is an opinionated and easy setup of a Unifi Controller, with its database, in Docker.
-This project uses host networking to make it easier to discover new devices on the local network.
-
-## Getting started 
-
-All you need to get started is Docker and Docker Compose. Once those are installed, you can start up the controller.
-
-```sh
-docker-compose up -d
-```
-
-You now have a Unifi Controller running! You can start configuring your network by heading over to the controller at `https://<controller_host_ip>:8443`.
-
-> If you are running this on your laptop or desktop, then the controller is at https://localhost:8443.
+Run the `on-host.sh` script on the host you want to setup Unifi on.
 
 ## Adopting devices
 
@@ -44,34 +31,6 @@ set-inform http://<controller_host_ip>:8080/inform
 
 The adoption process should now complete in the controller's web UI. If adoption still fails, then check `/var/log/messages` on your device for any hints as to why.
 
-## Different versions of the Unifi Controller
-
-Pass in `PKGURL` as a build-arg to Docker to change what version is setup in the 
-Docker image. This works for older and newer versions, such as beta releases.
-
-```sh
-docker-compose build --build-arg PKGURL=https://dl.ubnt.com/unifi/5.6.40/unifi_sysvinit_all.deb controller
-```
-
-## Docker volumes
-
-Below is the folder structure of `/unifi` inside the `controller` container:
-
-- `/unifi/data` contains your UniFi configuration data.
-- `/unifi/log` contains UniFi log files. Useful for debugging.
-- `/unifi/cert` for any custom TLS certificates.
-- `/unifi/backup` contains controller backup, if any is taken.
-
-This volume is, by default in `docker-compose.yml`, set to be `./unifi` and will be created by Docker if it does not exist. If the folder is empty on startup, then any missing folders will be created by the startup script.
-
-## Init scripts
-
-You can add your own startup script inside `/init.d`. These will be run as part of the container startup script, but before the controller has started.
-
-## Running ad-hoc scripts
-
-If you start the `controller` image with any command, then that will be run instead of the UniFi controller. This is to help troubleshooting and debugging.
-
 ## Exposed ports
 
 The `controller` container exposes the following ports
@@ -87,10 +46,3 @@ The `controller` container exposes the following ports
 See [UniFi's own documentation about which ports it uses](https://help.ubnt.com/hc/en-us/articles/218506997-UniFi-Ports-Used)
 
 The `mongo` container exposes `27017` and should be blocked by a firewall to prevent other devices from accessing it.
-
-## Cons of Docker host networking
-
-Host networking was setup to make the UniFi Controller's web UI easier to use, but it has downsides, such as:
-
-- MongoDB is exposed on `27017` on the host, which makes it accessible to the network. Recommended to block this with a host firewall.
-- Docker Compose DNS does not work in host mode, so `mongo:127.0.0.1` is added as an `extra_hosts` directive on the `controller` service.
