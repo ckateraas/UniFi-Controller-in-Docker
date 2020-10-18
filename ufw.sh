@@ -12,11 +12,8 @@ function allow_full_access_to_unifi() {
     ufw allow from "$1" to any port 10001 proto udp
 }
 
-# Allow switch to access the Ubiquiti Controller host
-allow_full_access_to_unifi 192.168.0.15
-
-# Allow AP Nano to access the Ubiquiti Controller host
-allow_full_access_to_unifi 192.168.0.17
+# Allow full to access the host
+# allow_full_access_to_unifi <IP>
 
 ufw default allow outgoing
 ufw default deny incoming
