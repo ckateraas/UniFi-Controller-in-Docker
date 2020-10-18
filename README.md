@@ -1,4 +1,4 @@
-# UniFi Controller in Docker
+# Unifi Controller
 
 Script to setup [Ubiqiti Network](https://www.ubnt.com/)'s Unifi Controller, with MongoDB, on Ubuntu 20.10.
 
